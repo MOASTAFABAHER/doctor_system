@@ -1,10 +1,8 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:doctor_system/blocs/cubit/registration_cubit.dart';
 import 'package:doctor_system/components/custom_botton.dart';
 import 'package:doctor_system/components/custom_textform.dart';
-import 'package:doctor_system/config/toast_config.dart';
-import 'package:doctor_system/enums/toast_status.dart';
 import 'package:doctor_system/models/app_colors.dart';
-import 'package:doctor_system/screens/home_screen.dart';
 import 'package:doctor_system/screens/login_screen.dart';
 import 'package:doctor_system/utils/app_navigator.dart';
 import 'package:flutter/material.dart';
@@ -19,92 +17,76 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kBackgroundColor,
-      appBar: AppBar(
-        title: Text('registration'.toUpperCase()),
-        centerTitle: true,
-        backgroundColor: AppColors.kRedColor,
-      ),
       body: BlocProvider(
         create: (context) => RegistrationCubit(),
         child: BlocConsumer<RegistrationCubit, RegistrationState>(
-          listener: (context, state) {
-            if (state is RegisterSucssesState) {
-              AppNavigator.appNavigator(context, HomeScreen(),
-                  isFinished: true);
-              ToastConfig.showToast(
-                  msg: 'Wellcome to our team',
-                  toastStates: ToastStates.Success);
-            }
-            ;
-            if (state is RegisterErrorState) {
-              print('Error');
-            }
-            ;
-            if (state is RegisterLoadingState) {
-              CircularProgressIndicator();
-            }
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             var cubit = RegistrationCubit.get(context);
-
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 40, bottom: 0),
-                child: Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: AppColors.kWhiteColor),
+            return Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'https://images.pexels.com/photos/4021773/pexels-photo-4021773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                      fit: BoxFit.fill)),
+              child: SafeArea(
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        AnimatedTextKit(repeatForever: true, animatedTexts: [
+                          TypewriterAnimatedText('Registration ',
+                              textStyle: TextStyle(
+                                  fontSize: 25.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.kWhiteColor),
+                              curve: Curves.easeIn,
+                              speed: Duration(milliseconds: 80)),
+                        ]),
+                        SizedBox(
+                          height: 20.h,
+                        ),
                         CustomTextForm(
-                            lable: 'Email', controller: cubit.emailController),
+                            lable: 'Name', controller: cubit.nameController),
+                        CustomTextForm(
+                          lable: 'Email',
+                          controller: cubit.emailController,
+                        ),
                         CustomTextForm(
                             lable: 'password',
                             controller: cubit.passwordController),
                         CustomTextForm(
-                            lable: 'Name', controller: cubit.nameController),
+                            lable: 'Title', controller: cubit.titleController),
                         CustomTextForm(
-                            lable: 'Addres',
+                            lable: 'Address',
                             controller: cubit.addresController),
-                        CustomTextForm(
-                            lable: 'titlle', controller: cubit.titleController),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Have an account ?',
-                                style: TextStyle(
-                                    fontSize: 14.sp, color: Colors.black),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    AppNavigator.appNavigator(
-                                      context,
-                                      LoginScreen(),
-                                    );
-                                  },
-                                  child: Text('Login'))
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              'Already have an account?',
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: AppColors.kWhiteColor),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  AppNavigator.appNavigator(
+                                      context, LoginScreen(),
+                                      isFinished: true);
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(fontSize: 16.sp),
+                                ))
+                          ],
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 30.h,
                         ),
                         CustomButton(
-                          color: AppColors.kRedColor,
-                          text: 'Register'.toUpperCase(),
-                          function: () {
-                            cubit.register();
-                          },
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                            color: AppColors.kOrangeColor, text: 'Register')
                       ],
                     ),
                   ),

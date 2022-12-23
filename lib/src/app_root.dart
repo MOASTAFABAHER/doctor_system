@@ -1,4 +1,3 @@
-import 'package:doctor_system/screens/home_screen.dart';
 import 'package:doctor_system/screens/login_screen.dart';
 import 'package:doctor_system/screens/registration_screen.dart';
 import 'package:flutter/material.dart';

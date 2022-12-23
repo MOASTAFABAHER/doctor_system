@@ -1,5 +1,6 @@
 import 'package:doctor_system/blocs/cubit/add_patient_cubit.dart';
 import 'package:doctor_system/blocs/cubit/get_patient_cubit.dart';
+import 'package:doctor_system/blocs/edit_patient/cubit/edit_patient_cubit.dart';
 import 'package:doctor_system/components/custom_botton.dart';
 import 'package:doctor_system/components/custom_textform.dart';
 import 'package:doctor_system/config/toast_config.dart';
@@ -14,8 +15,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddPatientScreen extends StatelessWidget {
-  const AddPatientScreen({super.key});
+class EditPatientScreen extends StatelessWidget {
+  int? id;
+  EditPatientScreen({required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class AddPatientScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: AppColors.kWhiteColor,
         title: Text(
-          'Add patient'.toUpperCase(),
+          'Edit Patient'.toUpperCase(),
           style: TextStyle(
               fontSize: 24.sp,
               fontWeight: FontWeight.bold,
@@ -45,24 +47,25 @@ class AddPatientScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: BlocProvider(
-          create: (context) => AddPatientCubit(),
-          child: BlocConsumer<AddPatientCubit, AddPatientState>(
+          create: (context) => EditPatientCubit(),
+          child: BlocConsumer<EditPatientCubit, EditPatientState>(
             listener: (context, state) {
-              if (state is AddPatientSucssesState) {
+              if (state is EditPatientSuccsessState) {
                 AppNavigator.appNavigator(context, GetPatientScreen());
                 ToastConfig.showToast(
-                    msg: "Added", toastStates: ToastStates.Success);
+                    msg: "Done", toastStates: ToastStates.Success);
               }
               if (state is AddPatientErrorState) {
                 ToastConfig.showToast(
                     msg: 'Error', toastStates: ToastStates.Error);
               }
-              if (state is AddPatientLoadigState) {
-                CircularProgressIndicator();
+              if (state is EditPatientErrorState) {
+                ToastConfig.showToast(
+                    msg: 'Error', toastStates: ToastStates.Warning);
               }
             },
             builder: (context, state) {
-              var cubit = AddPatientCubit.get(context);
+              var cubit = EditPatientCubit.get(context);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
@@ -89,9 +92,9 @@ class AddPatientScreen extends StatelessWidget {
                         ),
                         CustomButton(
                           color: AppColors.kRedColor,
-                          text: 'Add',
+                          text: 'edit',
                           function: () {
-                            cubit.addPatientDate();
+                            cubit.editPatient(id!);
                           },
                         ),
                         SizedBox(
