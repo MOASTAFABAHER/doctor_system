@@ -38,6 +38,10 @@ class LoginScreen extends StatelessWidget {
                 ToastConfig.showToast(
                     msg: 'Wellcome Back !', toastStates: ToastStates.Success);
               }
+              if (state is LoginErrorState) {
+                ToastConfig.showToast(
+                    msg: "Error", toastStates: ToastStates.Error);
+              }
             },
             builder: (context, state) {
               var cubit = LoginCubit.get(context);
