@@ -55,10 +55,7 @@ class EditPatientScreen extends StatelessWidget {
                 ToastConfig.showToast(
                     msg: "Done", toastStates: ToastStates.Success);
               }
-              if (state is AddPatientErrorState) {
-                ToastConfig.showToast(
-                    msg: 'Error', toastStates: ToastStates.Error);
-              }
+
               if (state is EditPatientErrorState) {
                 ToastConfig.showToast(
                     msg: 'Error', toastStates: ToastStates.Warning);
