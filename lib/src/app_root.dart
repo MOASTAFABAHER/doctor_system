@@ -15,7 +15,6 @@ class AppRoot extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'First Method',
           home: RegistrationScreen(),
         );
       },

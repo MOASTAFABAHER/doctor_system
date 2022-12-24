@@ -61,10 +61,14 @@ class Patinetitem extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
-                        Text(
-                          text1 == null ? 'Null' : text1!,
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: 85.w,
+                          child: Text(
+                            text1 == null ? 'Null' : text1!,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(
                           height: 20.h,

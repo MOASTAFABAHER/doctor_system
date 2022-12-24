@@ -20,7 +20,6 @@ class GetPatientCubit extends Cubit<GetPatientState> {
     }).then((value) {
       getPatients = PatientRequet.fromJson(value.data);
       emit(GetPatientSucssesState());
-    
     }).catchError((error) {
       emit(GetPatientErrorState());
       print(error);
